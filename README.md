@@ -28,8 +28,9 @@ Left and Right Opt keys still can be used to produce extended characters on macO
 https://www.macworld.co.uk/how-to/mac-keyboard-type-symbols-3504584/
 
 ## Other topics I should eventually take note of
-- Homebridge setup
+- Homebridge installation and setup
 - ConBee II and deCONZ setup
 - Unifi Protect plugin for Homebridge
 - Linking deCONZ and Homebridge services to account for the delay in bringing up the lights resources in the Zigbee network before Homebridge is started
 - OTAU for IKEA Tradfri firmware
+- How to update the correct Node and npm executables and libraries that match the Homebridge distro
