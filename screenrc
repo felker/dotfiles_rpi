@@ -1,0 +1,31 @@
+escape ^\\\
+startup_message off
+defutf8 on
+utf8 on
+term screen-256color
+# term xterm-256color
+# When you close Emacs, only the previous command history output should be seen instead of the output of the closed file:
+altscreen on  # default is "altscreen off"
+# https://stackoverflow.com/questions/17868652/screen-how-to-turn-on-alternate-screen
+
+# Use Ctrl-\ F to resize GNU Screen window after reattaching if it has shrunk
+# https://unix.stackexchange.com/questions/26743/force-gnu-screen-to-reflow-to-current-terminal-width-on-reattach
+
+# -------------- Debugging old version of GNU Screen + Emacs scrollback issues on ALCF Theta (2020-06-15) -------
+# Version on ALCF Theta:
+# Screen version 4.00.04devel (GNU) 8-Jun-12 --- must be a critical bugfix released much later than v4.0.0
+# vs. on Princeton Traverse:
+# Screen version 4.01.00devel (GNU) 2-May-06
+# Assuming SemVer, this is a newer minor version, but much older release date, than the ALCF Theta system version
+#
+# My install_screen.sh script replaces the system GNU Screen version with:
+# Screen version 4.08.00 (GNU) 05-Feb-20
+
+# GNU Screen ChangeLog is incomplete; was not used between 1994 (~v3.5.1) and 2014 (v4.2.0)
+# See http://git.savannah.gnu.org/cgit/screen.git/tree/src/ChangeLog?h=v.4.8.0
+
+# termcapinfo xterm* ti@:te@
+# termcapinfo screen* ti@:te@
+# termcapinfo xterm* 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007:ti@:te@'
+# termcapinfo screen* 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007:ti@:te@'
+# -----------------------------

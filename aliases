@@ -1,0 +1,90 @@
+# ~/.aliases
+
+# pd same as pushd
+alias pd='pushd'
+# pop same as popd
+alias pop='popd'
+
+# Useful ls aliases
+# -N to print entry names without quoting, e.g. items with spaces
+# -F appends / to dir, @ to symlink, * to exe
+alias ls='ls --color=auto -FN'
+## Use a long listing format with: ##
+# -A hidden dotfiles, excluding .. and .
+# -h humna readable
+alias ll='ls -lAh'
+
+# Other useful aliases of Bash commands
+alias c="clear"
+
+# If you want "rm" not to ask you for confirmation (dangerous),
+# comment the following line:
+# alias rm='rm -i'
+
+# you can also add other shell commands here, such as setting the
+# command line editing mode:
+
+# set -o vi
+# set -o emacs
+
+# "emacsclient" aliasees (see macOS dotfiles for descriptions)
+#----------------------
+export EMACS_SOCKET_NAME=/tmp/emacs${UID}/server  # change server to "name" if --daemon=name used on server start to override default "server-name" Emacs variable
+# following -s flag always takes precedence over env variable
+alias e='emacsclient --socket-name=${EMACS_SOCKET_NAME} -t --alternate-editor='
+# (single quotes prevent premature alias expansion of env variable at def time. Use "C-x a" on Zsh commmand line to expand alias)
+alias em='emacsclient -n -c --alternate-editor='
+# Use "M-x kill-emacs" to stop the server from the Emacs minibuffer, or:
+alias killemacs='emacsclient --socket-name=${EMACS_SOCKET_NAME} -e "(kill-emacs)"'
+#EMACS_SOCKET_NAME vs. -s/--socket-name (Set filename (FULL PATH??) of the local UNIX socket for communication)
+#EMACS_SERVER_FILE vs. -f/--server-file (TCP authentication file--- dont use TCP sockets!)
+
+# The above -s flags require a matching change to init.el, so that server-start creates this socket file:
+# (setq server-socket-dir (format "%s/emacs%d" (or (getenv "TMPDIR") "/tmp") (user-uid))))
+
+# Emacs 27.1 changed variable "server-socket-dir" default from
+# /tmp/emacs$UID/   ("server" is the default filename in this dir)
+# to $XDG_RUNTIME_DIR/$UID/emacs/
+# E.g. "/run/user/103006/emacs" on Traverse, which caused permission denied on compute nodes
+# Variable "server-name" = 'server' still the same (var used for both TCP and local UNIX socket servers)
+# if server-use-tcp is not nil, server-start will create this file under "server-socket-dir"
+# else (TCP server) it will be under "server-auth-dir"
+
+# References:
+# https://www.masteringemacs.org/article/whats-new-in-emacs-27-1
+# https://www.reddit.com/r/emacs/comments/hsxyls/where_does_emacs_put_its_server_socket_file/
+# https://stackoverflow.com/questions/23148787/why-emacsclient-cant-find-socket-after-executing-emacs-daemon/26471957
+
+# See top of ~/.zshrc file for profiling startup performance of shells
+# KGF: note, no /usr/bin/time on some clusters. In Bash, time is a reserved
+# keyword, so that it can benchmark shell builtins
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do time $shell -i -c exit; done
+}
+
+time_raw_zsh() {
+# parentheses launches subshell, which keeps the export ZDOTDIR local to that subshell
+# subshell != launching a new shell via script execution, to be clear:
+# https://unix.stackexchange.com/questions/138463/do-parentheses-really-put-the-command-in-a-subshell
+      for i in $(seq 1 10); do (export ZDOTDIR=/dev/null/; time zsh -i -c exit); done
+# https://stackoverflow.com/questions/10856129/setting-an-environment-variable-before-a-command-in-bash-is-not-working-for-the
+  #####    for i in $(seq 1 10); do ZDOTDIR=/dev/null/ eval 'time zsh -i -c exit'; done
+}
+
+timebash() {
+    for i in $(seq 1 10); do time bash -i -c :; done
+    # Bash prints "exit" each time on Traverse, my macOS system, etc.
+    # for i in $(seq 1 10); do time bash -i -c exit; done
+    # for i in $(seq 1 10); do time bash --noprofile --norc -i -c exit; done
+}
+
+# On Traverse:
+# time_raw_zsh: 0.06s
+# time_bash: 0.06 - 0.10s
+# time_zsh:
+#    - with conda initialization: 0.55 - 0.60s
+#    - without conda initialization: 0.18 - 0.21s
+#    - without conda initialization or OMZ: 0.12 - 0.15s
+#    - entire zshrc commented-out: 0.10 -0.12s
+# TODO: what other dotfiles are contributing the ~0.06s overhead vs. raw Zsh ? System /etc/... ?

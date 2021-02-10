@@ -1,0 +1,9 @@
+# ~/.bashenv
+
+# Not a standard Bash file, but this will contain essential definitions for
+# non-interactive shells (via "ssh [host][command]"), such as modules() shell fn
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi

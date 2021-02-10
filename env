@@ -1,0 +1,36 @@
+# ~/.env
+# User specific environment and startup programs. Currently, sourced by .zlogin for
+# interactive login shells and should be inherited by subshells)
+#
+# Note: LD_LIBRARY_PATH, LD_PRELOAD, etc. are not inherited when GNU Screen,
+# a setuid/setgid program, is launched (for security reasons).
+# https://superuser.com/questions/153420/why-does-my-ld-library-path-get-unset-when-using-screen-with-bash
+# https://superuser.com/questions/235760/ld-library-path-unset-by-screen
+#
+# For example, let /home/kfelker/bin come before PATH /usr/bin to shadow system binaries
+# (.zshrc runs "source $ZSH/oh-my-zsh.sh" which prepends this to PATH for ALL interactive
+#  shells, login or non-login)
+#PATH=$HOME/bin:$PATH
+
+# $HOME local Emacs, Git, tmux installation directories (and possibly GNU Screen, autoconf, Tree)
+PATH=$HOME/myemacs/bin:$PATH
+PATH=$HOME/mygit/bin:$PATH
+PATH=$HOME/bin:$PATH
+# PATH=$PATH:/bin # ???
+
+# Local Python binaries, like flake8 needed for flycheck (pip install --user flake8)
+PATH=$HOME/.local/bin:$PATH
+
+export MANPATH=/home/felker/share/man/:$MANPATH
+
+export PATH
+
+# Display correct Solarized colors in Emacs when using GNU Screen
+export TERM=xterm-256color
+
+# Set EDITOR env variable for Intel Advisor 2018, etc usage
+export EDITOR='emacsclient -t --alternate-editor=' # emacs
+
+# Set so that non-interactive Bash scripts get essential global definitions
+# when executed in Zsh. See .bashenv file for details
+export BASH_ENV=$HOME/.bashenv

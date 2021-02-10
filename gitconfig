@@ -1,0 +1,12 @@
+# May want to make this a local, non VC file, and instead include exmaple in repo
+[user]
+	email = kylefelk@gmail.com
+	name = Kyle Gerard Felker
+[push]
+	# New in Git 1.7.11, default in Git 2.0
+	#	default = simple # push current branch to UPSTREAM branch if name matches local
+	default = current # push current branch to remote if name matches local
+[log]
+	date = local
+[pull]
+	ff = only
