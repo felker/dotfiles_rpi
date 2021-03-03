@@ -1,4 +1,5 @@
 # ~/.env
+#echo "entering ~/.env"
 # User specific environment and startup programs. Currently, sourced by .zlogin for
 # interactive login shells and should be inherited by subshells)
 #

@@ -364,3 +364,14 @@ PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 export LD_LIBRARY_PATH=$HOME/lib/:$LD_LIBRARY_PATH
 # this path modification is needed for built-from-source libevent for my tmux installation,
 # + PostgreSQL and Boost installs for DeepHyper on Traverse
+
+
+# LXterminal on Raspberry Pi OS does not have an option to run each window or tab's shell as a login shell:
+# https://www.raspberrypi.org/forums/viewtopic.php?t=53408
+
+#zsh -l
+#lxterminal -l
+####[ -f ~/.zlogin ] && source ~/.zlogin  # KGF: results in duplicate PATH entries on subsequent child (actuall non-login) shells
+
+# Fix: Raspberry Pi Menu > Accessories > Terminal > Right click, Properties
+# Tab: change "lxterminal" to "lxterminal -l"

@@ -1,5 +1,5 @@
 # ~/.zshenv
-
+#echo "entering ~/.zshenv"
 # Source global definitions, even for non-interactive .zsh scripts
 # Unlike BASH_ENV, this is also sourced for interactive Zsh shells
 if [ -f /etc/zshrc ]; then
