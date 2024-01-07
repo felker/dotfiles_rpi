@@ -1,4 +1,7 @@
 # dotfiles_rpi
+
+_Archived: moved to a branch `rpi` on `dotfiles_remote.git` on 2021-03-03_
+
 System configuration files for my Raspberry Pi devices, including:
 - Raspberry Pi 3 Model B
 - Raspberry Pi Zero W
